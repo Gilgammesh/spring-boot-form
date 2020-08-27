@@ -1,82 +1,38 @@
 package com.santandertech.form.webapp.models.domain;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class Usuario {
 
 	@NotEmpty
+	@Getter
+	@Setter
+	@Size(min = 3, max = 10) // Size sólo funciona para campos String
 	private String username;
-
 	@NotEmpty
+	@Getter
+	@Setter
 	private String password;
-
 	@NotEmpty
+	@Getter
+	@Setter
+	@Email(message = "correo incorrecto name@dominio.com") // Solo para campos del tipo email o correo
 	private String email;
-
-	@NotEmpty
+	@NotEmpty(message = "El nombre no puede estar vacio")
+	@Getter
+	@Setter
 	private String nombre;
-
 	@NotEmpty
+	@Getter
+	@Setter
 	private String apellido;
-
+	@Getter
+	@Setter
 	private String identificador;
-
-	public Usuario() {
-
-	}
-
-	public Usuario(String username, String password, String email) {
-		this.username = username;
-		this.password = password;
-		this.email = email;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-	public String getIdentificador() {
-		return identificador;
-	}
-
-	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
-	}
 
 }

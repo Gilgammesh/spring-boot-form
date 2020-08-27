@@ -1,4 +1,4 @@
-package com.santandertech.inyecciondep.form.webapp;
+package com.santandertech.form.webapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
