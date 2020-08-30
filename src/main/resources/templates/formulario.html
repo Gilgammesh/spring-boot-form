@@ -8,6 +8,27 @@
 	<form th:action="@{/form}" th:object="${usuario}" method="post">
 		<h2 th:text="${titulo}"></h2>
 		<div>
+			<label for="ciudad">Ciudad</label>
+			<div>
+				<select id="ciudad" name="ciudad" th:field="*{ciudad.id}" >
+				    <option value="">--seleccionar--</option>
+				    <!-- <option th:each="ciudad: ${ciudades}" th:text="${ciudad}" th:value="${ciudad}"></option> -->
+				    <!-- <option th:each="ciudad: ${ciudadesMap.entrySet()}" th:text="${ciudad.value}" th:value="${ciudad.key}"></option> -->
+				    <option th:each="ciudad: ${ciudadesModel}" th:text="${ciudad.nombre}" th:value="${ciudad.id}"></option>
+				</select>
+			</div>
+			<label th:if="${#fields.hasErrors('ciudad.id')}" th:errors="*{ciudad.id}" style="color: red;"></label>
+		</div>
+		<br>
+		<div>
+			<label for="identificador">Identificador</label>
+			<div>
+				<input id="identificador" name="identificador" type="text" th:field="*{identificador}" />
+			</div>
+			<label th:if="${#fields.hasErrors('identificador')}" th:errors="*{identificador}" style="color: red;"></label>
+		</div>
+		<br>
+		<div>
 			<label for="nombre">Nombre</label>
 			<div>
 				<input id="nombre" name="nombre" type="text" th:field="*{nombre}" />
@@ -57,6 +78,23 @@
 			</div>
 			<!-- <label th:if="${error != null && error.containsKey('email')}" th:text="${error.email}"></label> -->
 			<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></label>
+		</div>
+		<br>
+		<div>
+			<label for="edad">Edad:</label>
+			<div>
+				<input id="edad" name="edad" type="number" th:field="*{edad}" />
+			</div>
+			<label th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}" style="color: red;"></label>
+		</div>
+		<br>
+		<div>
+			<label for="fechaNac">Fecha de Nacimiento:</label>
+			<div>
+				<!-- <input id="fechaNac" name="fechaNac" type="text" th:field="*{fechaNac}" placeholder="yyyy/MM/dd" /> -->
+				<input id="fechaNac" name="fechaNac" type="date" th:field="*{fechaNac}" />
+			</div>
+			<label th:if="${#fields.hasErrors('fechaNac')}" th:errors="*{fechaNac}" style="color: red;"></label>
 		</div>
 		<br>
 		<div>
