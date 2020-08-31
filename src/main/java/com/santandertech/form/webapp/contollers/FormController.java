@@ -1,6 +1,7 @@
 package com.santandertech.form.webapp.contollers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,10 +23,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.santandertech.form.webapp.editors.CiudadPropertyEditor;
 import com.santandertech.form.webapp.editors.MayusculaEditor;
+import com.santandertech.form.webapp.editors.RolesEditor;
 import com.santandertech.form.webapp.models.domain.Ciudad;
+import com.santandertech.form.webapp.models.domain.Rol;
 import com.santandertech.form.webapp.models.domain.Usuario;
 import com.santandertech.form.webapp.services.CiudadService;
+import com.santandertech.form.webapp.services.RolService;
 import com.santandertech.form.webapp.validation.UsuarioValidador;
 
 @Controller
@@ -34,9 +39,18 @@ public class FormController {
 
 	@Autowired
 	private UsuarioValidador validador;
-	
+
 	@Autowired
 	private CiudadService ciudadService;
+
+	@Autowired
+	private RolService rolService;
+
+	@Autowired
+	private CiudadPropertyEditor ciudadEditor;
+
+	@Autowired
+	private RolesEditor rolesEditor;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -46,19 +60,23 @@ public class FormController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-		//binder.registerCustomEditor(Date.class, "fechaNac", new CustomDateEditor(dateFormat, false));
-		
-		//binder.registerCustomEditor(String.class, new MayusculaEditor());
+		// binder.registerCustomEditor(Date.class, "fechaNac", new
+		// CustomDateEditor(dateFormat, false));
+
+		// binder.registerCustomEditor(String.class, new MayusculaEditor());
 		binder.registerCustomEditor(String.class, "nombre", new MayusculaEditor());
-		
+
+		binder.registerCustomEditor(Ciudad.class, "ciudad", ciudadEditor);
+		binder.registerCustomEditor(Rol.class, "roles", rolesEditor);
+
 	}
-	
+
 	// Lista simple como arraylist
 	@ModelAttribute("ciudades")
 	public List<String> ciudades() {
 		return Arrays.asList("Tarapoto", "Moyobamba", "Rioja", "Lamas", "Tocache", "Juanjui", "Bellavista");
-	}	
-	
+	}
+
 	// Lista como map
 	@ModelAttribute("ciudadesMap")
 	public Map<String, String> ciudadesMap() {
@@ -72,18 +90,39 @@ public class FormController {
 		ciudades.put("be", "Bellavista");
 		return ciudades;
 	}
-	
+
 	@ModelAttribute("ciudadesModel")
 	public List<Ciudad> ciudadesModel() {
-		/*return Arrays.asList(
-				new Ciudad(1, "ta", "Tarapoto"), 
-				new Ciudad(2, "mo", "Moyobamba"), 
-				new Ciudad(3, "ri", "Rioja"), 
-				new Ciudad(4, "la", "Lamas"), 
-				new Ciudad(5, "to", "Tocache"), 
-				new Ciudad(6, "ju", "Juanjui"), 
-				new Ciudad(7, "be", "Bellavista"));*/
+		/*
+		 * return Arrays.asList( new Ciudad(1, "ta", "Tarapoto"), new Ciudad(2, "mo",
+		 * "Moyobamba"), new Ciudad(3, "ri", "Rioja"), new Ciudad(4, "la", "Lamas"), new
+		 * Ciudad(5, "to", "Tocache"), new Ciudad(6, "ju", "Juanjui"), new Ciudad(7,
+		 * "be", "Bellavista"));
+		 */
 		return ciudadService.listar();
+	}
+
+	@ModelAttribute("listaRolesString")
+	public List<String> listaRolesString() {
+		List<String> roles = new ArrayList<>();
+		roles.add("ROLE_ADMIN");
+		roles.add("ROLE_USER");
+		roles.add("ROLE_MODERATOR");
+		return roles;
+	}
+
+	@ModelAttribute("listaRolesMap")
+	public Map<String, String> listaRolesMap() {
+		Map<String, String> roles = new HashMap<String, String>();
+		roles.put("ROLE_ADMIN", "Administrador");
+		roles.put("ROLE_USER", "Usuario");
+		roles.put("ROLE_MODERATOR", "Moderador");
+		return roles;
+	}
+
+	@ModelAttribute("listaRoles")
+	public List<Rol> listaRoles() {
+		return rolService.listar();
 	}
 
 	@GetMapping("/form")
@@ -92,6 +131,7 @@ public class FormController {
 		usuario.setNombre("Carlos");
 		usuario.setApellido("Santander");
 		usuario.setIdentificador("UID-1897");
+		usuario.setHabilitar(true);
 		model.addAttribute("titulo", "Formulario usuarios");
 		model.addAttribute("usuario", usuario);
 		return "formulario";

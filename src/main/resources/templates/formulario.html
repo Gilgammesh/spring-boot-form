@@ -8,16 +8,33 @@
 	<form th:action="@{/form}" th:object="${usuario}" method="post">
 		<h2 th:text="${titulo}"></h2>
 		<div>
+			<label>Habilitar</label>
+			<div>
+				<input name="habilitar" type="checkbox" th:field="*{habilitar}" />
+			</div>
+			<label th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" style="color: red;"></label>
+		</div>
+		<br>
+		<div>
 			<label for="ciudad">Ciudad</label>
 			<div>
-				<select id="ciudad" name="ciudad" th:field="*{ciudad.id}" >
+				<select id="ciudad" name="ciudad" th:field="*{ciudad}" >
 				    <option value="">--seleccionar--</option>
 				    <!-- <option th:each="ciudad: ${ciudades}" th:text="${ciudad}" th:value="${ciudad}"></option> -->
 				    <!-- <option th:each="ciudad: ${ciudadesMap.entrySet()}" th:text="${ciudad.value}" th:value="${ciudad.key}"></option> -->
 				    <option th:each="ciudad: ${ciudadesModel}" th:text="${ciudad.nombre}" th:value="${ciudad.id}"></option>
 				</select>
 			</div>
-			<label th:if="${#fields.hasErrors('ciudad.id')}" th:errors="*{ciudad.id}" style="color: red;"></label>
+			<label th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}" style="color: red;"></label>
+		</div>
+		<br>
+		<div>
+			<label>Roles</label>
+			<div th:each="rol: ${listaRoles}">
+				<input name="roles" type="checkbox" th:field="*{roles}" th:value="${rol.id}" />
+				<label th:for="${#ids.prev('roles')}" th:text="${rol.nombre}"></label>
+			</div>
+			<label th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" style="color: red;"></label>
 		</div>
 		<br>
 		<div>

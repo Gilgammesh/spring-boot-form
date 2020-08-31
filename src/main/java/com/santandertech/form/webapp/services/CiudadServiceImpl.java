@@ -3,12 +3,11 @@ package com.santandertech.form.webapp.services;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.santandertech.form.webapp.models.domain.Ciudad;
 
-@Component
+@Service
 public class CiudadServiceImpl implements CiudadService {
 	
 	private List<Ciudad> lista;

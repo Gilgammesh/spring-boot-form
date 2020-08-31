@@ -1,8 +1,8 @@
 package com.santandertech.form.webapp.models.domain;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 //import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
@@ -59,7 +59,16 @@ public class Usuario {
 	/*@NotEmpty
 	@Getter @Setter	private String ciudad;*/
 	
-	@Valid
+	//@Valid
+	@NotNull
 	@Getter @Setter	private Ciudad ciudad;
+	
+	/*@NotEmpty
+	@Getter @Setter private List<String> roles;*/
+	
+	@NotEmpty
+	@Getter @Setter private List<Rol> roles;
+	
+	@Getter @Setter private Boolean habilitar;
 
 }
