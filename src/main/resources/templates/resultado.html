@@ -3,26 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <title>Curso Spring Boot con Formularios en Thymeleaf</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-	<h2 th:text="${titulo}"></h2>
-	<ul>
-		<li th:text="${usuario.nombre}"></li>
-		<li th:text="${usuario.apellido}"></li>
-		<li th:text="${usuario.username}"></li>
-		<li th:text="${usuario.password}"></li>
-		<li th:text="${usuario.email}"></li>
-		<li th:text="${usuario.identificador}"></li>
-		<li th:text="${usuario.edad}"></li>
-		<li th:text="${usuario.ciudad.id}"></li>
-		<li th:text="${usuario.ciudad.codigo}"></li>
-		<li th:text="${usuario.ciudad.nombre}"></li>
-		<li th:text="${usuario.habilitar} ? 'Habilitado' : 'Deshabilitado' "></li>
-		<li th:text="${#dates.format(usuario.fechaNac, 'dd MMM yyyy')}"></li>
-	</ul>
-	<ul>
-		<li th:each="rol: ${usuario.roles}" th:text="${rol.id} + ' : ' + ${rol.rol} + ' => ' + ${rol.nombre}"></li>
-	</ul>
+	<div class="container">
+		<h2 th:text="${titulo}"></h2>
+		<hr />
+		<a th:href="@{/form}" class="btn btn-success">Regresar</a>
+		<ul class="list-group mt-2">
+			<li th:text="'Datos del Usuario'" class="list-group-item active"></li>
+			<li th:text="${usuario.nombre}" class="list-group-item"></li>
+			<li th:text="${usuario.apellido}" class="list-group-item"></li>
+			<li th:text="${usuario.username}" class="list-group-item"></li>
+			<li th:text="${usuario.password}" class="list-group-item"></li>
+			<li th:text="${usuario.email}" class="list-group-item"></li>
+			<li th:text="${usuario.identificador}" class="list-group-item"></li>
+			<li th:text="${usuario.edad}" class="list-group-item"></li>
+			<li th:text="${usuario.ciudad.id}" class="list-group-item"></li>
+			<li th:text="${usuario.ciudad.codigo}" class="list-group-item"></li>
+			<li th:text="${usuario.ciudad.nombre}" class="list-group-item"></li>
+			<li th:text="${usuario.habilitar} ? 'Habilitado' : 'Deshabilitado' "
+				class="list-group-item"></li>
+			<li th:text="${#dates.format(usuario.fechaNac, 'dd MMM yyyy')}"
+				class="list-group-item"></li>
+			<li th:text="${usuario.genero}" class="list-group-item"></li>
+			<li th:text="'Valor oculto : ' + ${usuario.valorSecreto}"
+				class="list-group-item"></li>
+		</ul>
+		<ul class="list-group mt-3">
+			<li th:text="'Roles'" class="list-group-item active"></li>
+			<li th:each="rol: ${usuario.roles}"
+				th:text="${rol.id} + ' : ' + ${rol.rol} + ' => ' + ${rol.nombre}"
+				class="list-group-item"></li>
+		</ul>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"></script>
 
 </body>
 </html>

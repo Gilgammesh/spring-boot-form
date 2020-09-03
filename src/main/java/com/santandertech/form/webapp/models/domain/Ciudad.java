@@ -12,5 +12,10 @@ public class Ciudad {
 	@Getter @Setter private Integer id;	
 	@Getter @Setter private String codigo;	
 	@Getter @Setter private String nombre;
+	
+	@Override
+	public String toString() {		
+		return this.id.toString();
+	}
 
 }

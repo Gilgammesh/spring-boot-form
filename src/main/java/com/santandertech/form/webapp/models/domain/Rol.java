@@ -9,6 +9,21 @@ import lombok.Setter;
 	
 	@Getter @Setter private Integer id;
 	@Getter @Setter private String rol;
-	@Getter @Setter private String nombre;	
-
+	@Getter @Setter private String nombre;
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(this == obj) {
+			return true;
+		}
+		
+		if(!(obj instanceof Rol)) {
+			return false;
+		}
+		
+		Rol rol = (Rol) obj;
+		return this.id != null && this.id.equals(rol.getId());
+	}	
+	
 }

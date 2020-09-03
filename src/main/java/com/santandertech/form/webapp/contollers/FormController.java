@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -125,6 +126,11 @@ public class FormController {
 		return rolService.listar();
 	}
 
+	@ModelAttribute("genero")
+	public List<String> genero() {
+		return Arrays.asList("Hombre", "Mujer");
+	}
+
 	@GetMapping("/form")
 	public String form(Model model) {
 		Usuario usuario = new Usuario();
@@ -132,6 +138,10 @@ public class FormController {
 		usuario.setApellido("Santander");
 		usuario.setIdentificador("UID-1897");
 		usuario.setHabilitar(true);
+		usuario.setValorSecreto("este es un valor secreto");
+		usuario.setCiudad(new Ciudad(2, "mo", "Moyobamba"));
+		usuario.setRoles(Arrays.asList(new Rol(2, "ROLE_USER", "Usuario")));
+		usuario.setFechaNac(new Date());
 		model.addAttribute("titulo", "Formulario usuarios");
 		model.addAttribute("usuario", usuario);
 		return "formulario";
@@ -158,7 +168,7 @@ public class FormController {
 
 	// Método mas limpio de código
 	@PostMapping("/form")
-	public String enviarForm(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
+	public String enviarForm(@Valid Usuario usuario, BindingResult result, Model model) {
 
 		// validador.validate(usuario, result);
 
@@ -173,6 +183,18 @@ public class FormController {
 			 */
 			return "formulario";
 		}
+		
+		
+		return "redirect:/ver";
+	}
+	
+	@GetMapping("/ver")
+	public String ver(@SessionAttribute(name="usuario", required = false) Usuario usuario, Model model, SessionStatus status) {
+		
+		if (usuario == null) {
+			return "redirect:/form";
+		}
+		
 		model.addAttribute("titulo", "Resultado del Formulario");
 		model.addAttribute("usuario", usuario);
 		status.setComplete();

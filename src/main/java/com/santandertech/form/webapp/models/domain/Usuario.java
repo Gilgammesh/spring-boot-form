@@ -70,5 +70,9 @@ public class Usuario {
 	@Getter @Setter private List<Rol> roles;
 	
 	@Getter @Setter private Boolean habilitar;
+	
+	@Getter @Setter private String genero;
+	
+	@Getter @Setter private String valorSecreto;
 
 }
